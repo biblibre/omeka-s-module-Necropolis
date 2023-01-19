@@ -1,0 +1,81 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, BibLibre
+# This file is distributed under the same license as the Necropolis package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Necropolis\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-19 16:14+0100\n"
+"PO-Revision-Date: 2023-01-19 16:15+0100\n"
+"Last-Translator: Julian Maurice <julian.maurice@biblibre.com>\n"
+"Language: fr\n"
+"Language-Team: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+"X-Generator: Poedit 2.4.2\n"
+
+#: ../../index.rst:2
+msgid "Necropolis User Manual"
+msgstr "Manuel utilisateur de Necropolis"
+
+#: ../../index.rst:4
+msgid ""
+"`Necropolis`_ is a module for Omeka S that keep track of deleted "
+"resources (items, item sets and media)."
+msgstr ""
+"`Necropolis`_ est un module pour Omeka S qui garde une trace des "
+"ressources supprimées (contenus, collections et médias)."
+
+#: ../../index.rst:10
+msgid "Installation"
+msgstr "Installation"
+
+#: ../../index.rst:12
+msgid ""
+"See the official documentation section on `adding modules to Omeka S "
+"<https://omeka.org/s/docs/user-manual/modules/#adding-modules-to-omeka-"
+"s>`_"
+msgstr ""
+"Voir la section sur `l'ajout de modules à Omeka S <https://omeka.org/s/"
+"docs/user-manual/modules/#adding-modules-to-omeka-s>`_ dans la "
+"documentation officielle"
+
+#: ../../index.rst:16
+msgid "Usage"
+msgstr "Utilisation"
+
+#: ../../index.rst:18
+msgid ""
+"Once the module is enabled, it will automatically save deleted resources "
+"in a separate database table (``necropolis_resource``). The list of "
+"deleted resources can be accessed by a link in the admin menu."
+msgstr ""
+"Une fois le module activé, il va automatiquement sauvegarder les "
+"ressources supprimées dans une table de base de données séparée "
+"(``necropolis_resource``). La liste des ressources supprimées est "
+"accessible via un lien dans le menu d'administration."
+
+#: ../../index.rst:22
+msgid ""
+"**WARNING:** Uninstalling the module will delete all saved resources "
+"permanently."
+msgstr ""
+"**ATTENTION:** Désinstaller le module supprimera toutes les ressources "
+"sauvegardées de manière permanente."
+
+#: ../../index.rst:25
+msgid "License"
+msgstr "Licence"
+
+#: ../../index.rst:27
+msgid ""
+"Necropolis is distributed under the GNU General Public License, version "
+"3. The full text of this license is given in the ``LICENSE`` file."
+msgstr ""
+"Necropolis est distribué sous licence publique générale GNU, version 3. "
+"Le texte complet de cette licence est donnée dans le fichier ``LICENSE``."
