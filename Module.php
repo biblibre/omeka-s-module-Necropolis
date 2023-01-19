@@ -5,7 +5,6 @@ namespace Necropolis;
 use DateTime;
 use Laminas\EventManager\SharedEventManagerInterface;
 use Laminas\EventManager\Event;
-use Laminas\Mvc\MvcEvent;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Necropolis\Entity\NecropolisResource;
 use Omeka\Module\AbstractModule;
