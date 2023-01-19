@@ -1,0 +1,19 @@
+<?php echo $this->pageTitle($this->translate('Necropolis')); ?>
+
+<?php if (!empty($items)): ?>
+    <h2><?php echo $this->translate('Last deleted items'); ?></h2>
+    <?php echo $this->partial('necropolis/partial/resource-table', ['resources' => $items]); ?>
+    <?php echo $this->hyperlink($this->translate('See all deleted items'), $this->url('admin/necropolis/default', ['controller' => 'item'])); ?>
+<?php endif; ?>
+
+<?php if (!empty($item_sets)): ?>
+    <h2><?php echo $this->translate('Last deleted item sets'); ?></h2>
+    <?php echo $this->partial('necropolis/partial/resource-table', ['resources' => $item_sets]); ?>
+    <?php echo $this->hyperlink($this->translate('See all deleted item sets'), $this->url('admin/necropolis/default', ['controller' => 'item-set'])); ?>
+<?php endif; ?>
+
+<?php if (!empty($medias)): ?>
+    <h2><?php echo $this->translate('Last deleted media'); ?></h2>
+    <?php echo $this->partial('necropolis/partial/resource-table', ['resources' => $medias]); ?>
+    <?php echo $this->hyperlink($this->translate('See all deleted media'), $this->url('admin/necropolis/default', ['controller' => 'media'])); ?>
+<?php endif; ?>

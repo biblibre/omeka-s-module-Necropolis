@@ -1,0 +1,74 @@
+# French translations for PACKAGE package.
+# Copyright (C) 2023 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Automatically generated, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-19 14:38+0100\n"
+"PO-Revision-Date: 2023-01-19 14:40+0100\n"
+"Last-Translator: Julian Maurice <julian.maurice@biblibre.com>\n"
+"Language-Team: none\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.4.2\n"
+
+#: view/necropolis/admin/index/index.phtml:1
+msgid "Necropolis"
+msgstr "Necropolis"
+
+#: view/necropolis/admin/index/index.phtml:4
+msgid "Last deleted items"
+msgstr "Derniers contenus supprimés"
+
+#: view/necropolis/admin/index/index.phtml:6
+msgid "See all deleted items"
+msgstr "Voir tous les contenus supprimés"
+
+#: view/necropolis/admin/index/index.phtml:10
+msgid "Last deleted item sets"
+msgstr "Dernières collections supprimées"
+
+#: view/necropolis/admin/index/index.phtml:12
+msgid "See all deleted item sets"
+msgstr "Voir toutes les collections supprimées"
+
+#: view/necropolis/admin/index/index.phtml:16
+msgid "Last deleted media"
+msgstr "Derniers médias supprimés"
+
+#: view/necropolis/admin/index/index.phtml:18
+msgid "See all deleted media"
+msgstr "Voir tous les médias supprimés"
+
+#: view/necropolis/admin/item-set/browse.phtml:10
+#: view/necropolis/admin/item/browse.phtml:10
+#: view/necropolis/admin/media/browse.phtml:10
+#: view/necropolis/partial/resource-table.phtml:5
+msgid "Deleted"
+msgstr "Supprimé"
+
+#: view/necropolis/admin/item-set/browse.phtml:16
+msgid "Deleted item sets"
+msgstr "Collections supprimées"
+
+#: view/necropolis/admin/item/browse.phtml:16
+msgid "Deleted items"
+msgstr "Contenus supprimés"
+
+#: view/necropolis/admin/media/browse.phtml:16
+msgid "Deleted media"
+msgstr "Médias supprimés"
+
+#: view/necropolis/partial/resource-table.phtml:6
+msgid "Deleted by"
+msgstr "Supprimé par"
+
+#: view/necropolis/partial/resource-table.phtml:15
+msgid "[Deleted user]"
+msgstr "[utilisateur supprimé]"
