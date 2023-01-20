@@ -22,28 +22,6 @@ workspace:
   path: omeka-s/modules/Necropolis
 ---
 kind: pipeline
-name: omeka:3.1.2 php:7.4 mariadb:10.5
-services:
-- environment:
-    MYSQL_DATABASE: omeka_test
-    MYSQL_ROOT_PASSWORD: root
-  image: mariadb:10.5
-  name: db
-steps:
-- commands:
-  - cp -rT /usr/src/omeka-s ../..
-  - echo 'host = "db"\nuser = "root"\npassword = "root"\ndbname = "omeka_test"\n'
-    > ../../application/test/config/database.ini
-  - bash -c "cd ../.. && php /usr/local/libexec/wait-for-db.php"
-  - ../../vendor/bin/phpunit
-  - ../../node_modules/.bin/gulp test:module:cs
-  image: biblibre/omeka-s-ci:3.1.2-php7.4
-  name: test
-type: docker
-workspace:
-  path: omeka-s/modules/Necropolis
----
-kind: pipeline
 name: omeka:3.1.2 php:8.0 mariadb:10.5
 services:
 - environment:
@@ -88,7 +66,7 @@ workspace:
   path: omeka-s/modules/Necropolis
 ---
 kind: pipeline
-name: omeka:4.0.0-rc php:8.0 mariadb:10.5
+name: omeka:4.0.0 php:8.0 mariadb:10.5
 services:
 - environment:
     MYSQL_DATABASE: omeka_test
@@ -103,14 +81,14 @@ steps:
   - bash -c "cd ../.. && php /usr/local/libexec/wait-for-db.php"
   - ../../vendor/bin/phpunit
   - ../../node_modules/.bin/gulp test:module:cs
-  image: biblibre/omeka-s-ci:4.0.0-rc-php8.0
+  image: biblibre/omeka-s-ci:4.0.0-php8.0
   name: test
 type: docker
 workspace:
   path: omeka-s/modules/Necropolis
 ---
 kind: pipeline
-name: omeka:4.0.0-rc php:8.1 mariadb:10.5
+name: omeka:4.0.0 php:8.1 mariadb:10.5
 services:
 - environment:
     MYSQL_DATABASE: omeka_test
@@ -125,13 +103,35 @@ steps:
   - bash -c "cd ../.. && php /usr/local/libexec/wait-for-db.php"
   - ../../vendor/bin/phpunit
   - ../../node_modules/.bin/gulp test:module:cs
-  image: biblibre/omeka-s-ci:4.0.0-rc-php8.1
+  image: biblibre/omeka-s-ci:4.0.0-php8.1
+  name: test
+type: docker
+workspace:
+  path: omeka-s/modules/Necropolis
+---
+kind: pipeline
+name: omeka:4.0.0 php:8.2 mariadb:10.5
+services:
+- environment:
+    MYSQL_DATABASE: omeka_test
+    MYSQL_ROOT_PASSWORD: root
+  image: mariadb:10.5
+  name: db
+steps:
+- commands:
+  - cp -rT /usr/src/omeka-s ../..
+  - echo 'host = "db"\nuser = "root"\npassword = "root"\ndbname = "omeka_test"\n'
+    > ../../application/test/config/database.ini
+  - bash -c "cd ../.. && php /usr/local/libexec/wait-for-db.php"
+  - ../../vendor/bin/phpunit
+  - ../../node_modules/.bin/gulp test:module:cs
+  image: biblibre/omeka-s-ci:4.0.0-php8.2
   name: test
 type: docker
 workspace:
   path: omeka-s/modules/Necropolis
 ---
 kind: signature
-hmac: 0b7dcd8c3d441ac8646ad646ec161ba8f3a43fca0a034bcd8d00cde635b77eac
+hmac: b6bbd94e7d1e40079e546386dca31b3ccc87b0439d315261be5a7b950415b7d2
 
 ...
