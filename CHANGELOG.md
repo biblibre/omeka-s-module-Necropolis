@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Added a PHP script to export IDs of deleted resources.
+  See usage with `php data/scripts/export_since_date.php --help`.
+
 ## [0.1.0] - 2023-01-20
 
 Initial release
