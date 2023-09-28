@@ -6,8 +6,8 @@ use DateTime;
 use Laminas\EventManager\SharedEventManagerInterface;
 use Laminas\EventManager\Event;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use Necropolis\Entity\NecropolisResource;
 use Omeka\Module\AbstractModule;
+use PDO;
 
 class Module extends AbstractModule
 {
@@ -51,26 +51,37 @@ class Module extends AbstractModule
     public function onResourceRemove(Event $event)
     {
         $services = $this->getServiceLocator();
-        $logger = $services->get('Omeka\Logger');
-        $em = $services->get('Omeka\EntityManager');
         $apiAdapterManager = $services->get('Omeka\ApiAdapterManager');
         $authenticationService = $services->get('Omeka\AuthenticationService');
+        $connection = $services->get('Omeka\Connection');
 
         $resource = $event->getTarget();
         $apiAdapter = $apiAdapterManager->get($resource->getResourceName());
         $representation = $apiAdapter->getRepresentation($resource);
+        $deleter = $authenticationService->getIdentity();
 
-        $necropolisResource = new NecropolisResource();
-        $necropolisResource->setId($resource->getId());
-        $necropolisResource->setTitle($resource->getTitle());
-        $necropolisResource->setIsPublic($resource->isPublic());
-        $necropolisResource->setCreated($resource->getCreated());
-        $necropolisResource->setModified($resource->getModified());
-        $necropolisResource->setDeleted(new DateTime());
-        $necropolisResource->setDeleter($authenticationService->getIdentity());
-        $necropolisResource->setResourceType($resource->getResourceId());
-        $necropolisResource->setRepresentation($representation);
+        $sql = 'INSERT INTO necropolis_resource'
+            . ' (id, title, is_public, created, modified, deleted, deleter_id, resource_type, representation) VALUES'
+            . ' (:id, :title, :is_public, :created, :modified, :deleted, :deleter_id, :resource_type, :representation)';
+        $stmt = $connection->prepare($sql);
+        $stmt->bindValue('id', $resource->getId(), PDO::PARAM_INT);
+        $stmt->bindValue('title', $resource->getTitle(), PDO::PARAM_STR);
+        $stmt->bindValue('is_public', $resource->isPublic(), PDO::PARAM_BOOL);
+        $stmt->bindValue('created', $resource->getCreated(), 'datetime');
+        $stmt->bindValue('modified', $resource->getModified(), 'datetime');
+        $stmt->bindValue('deleted', new DateTime(), 'datetime');
+        if ($deleter) {
+            $stmt->bindValue('deleter_id', $deleter->getId(), PDO::PARAM_INT);
+        } else {
+            $stmt->bindValue('deleter_id', null, PDO::PARAM_NULL);
+        }
+        $stmt->bindValue('resource_type', $resource->getResourceId(), PDO::PARAM_STR);
+        $stmt->bindValue('representation', $representation, 'json_array');
 
-        $em->persist($necropolisResource);
+        if (method_exists($stmt, 'executeStatement')) {
+            $stmt->executeStatement();
+        } else {
+            $stmt->execute();
+        }
     }
 }

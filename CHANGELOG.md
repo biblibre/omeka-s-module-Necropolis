@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- Avoid fatal error when deleting a media from the item modification page
+
 ### Added
 
 - Added a PHP script to export IDs of deleted resources.
