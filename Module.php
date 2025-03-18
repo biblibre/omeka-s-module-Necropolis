@@ -2,6 +2,7 @@
 
 namespace Necropolis;
 
+use Composer\Semver\Comparator;
 use DateTime;
 use Laminas\EventManager\SharedEventManagerInterface;
 use Laminas\EventManager\Event;
@@ -11,6 +12,8 @@ use PDO;
 
 class Module extends AbstractModule
 {
+    protected array $pendingDeletions = [];
+
     public function install(ServiceLocatorInterface $serviceLocator)
     {
         $connection = $serviceLocator->get('Omeka\Connection');
@@ -24,23 +27,23 @@ class Module extends AbstractModule
         $connection->exec("DROP TABLE IF EXISTS necropolis_resource");
     }
 
+    public function upgrade($oldVersion, $newVersion, ServiceLocatorInterface $serviceLocator)
+    {
+        $connection = $services->get('Omeka\Connection');
+        if (Comparator::lessThan($oldVersion, '0.3.0')) {
+            $connection->executeStatement(<<<'SQL'
+                DELETE FROM necropolis_resource
+                WHERE EXISTS (SELECT * FROM resource WHERE resource.id = necropolis_resource.id)
+            SQL);
+        }
+    }
+
     public function attachListeners(SharedEventManagerInterface $sharedEventManager)
     {
-        $sharedEventManager->attach(
-            'Omeka\Entity\Item',
-            'entity.remove.pre',
-            [$this, 'onResourceRemove']
-        );
-        $sharedEventManager->attach(
-            'Omeka\Entity\ItemSet',
-            'entity.remove.pre',
-            [$this, 'onResourceRemove']
-        );
-        $sharedEventManager->attach(
-            'Omeka\Entity\Media',
-            'entity.remove.pre',
-            [$this, 'onResourceRemove']
-        );
+        foreach (['Omeka\Entity\Item', 'Omeka\Entity\ItemSet', 'Omeka\Entity\Media'] as $identifier) {
+            $sharedEventManager->attach($identifier, 'entity.remove.pre', [$this, 'onResourceRemovePre']);
+            $sharedEventManager->attach($identifier, 'entity.remove.post', [$this, 'onResourceRemovePost']);
+        }
     }
 
     public function getConfig()
@@ -48,40 +51,69 @@ class Module extends AbstractModule
         return require __DIR__ . '/config/module.config.php';
     }
 
-    public function onResourceRemove(Event $event)
+    public function onResourceRemovePre(Event $event)
     {
         $services = $this->getServiceLocator();
         $apiAdapterManager = $services->get('Omeka\ApiAdapterManager');
         $authenticationService = $services->get('Omeka\AuthenticationService');
-        $connection = $services->get('Omeka\Connection');
 
         $resource = $event->getTarget();
         $apiAdapter = $apiAdapterManager->get($resource->getResourceName());
         $representation = $apiAdapter->getRepresentation($resource);
         $deleter = $authenticationService->getIdentity();
 
+        $id = spl_object_id($resource);
+        $this->pendingDeletions[$id] = [
+            'id' => $resource->getId(),
+            'title' => $resource->getTitle(),
+            'is_public' => $resource->isPublic(),
+            'created' => $resource->getCreated(),
+            'modified' => $resource->getModified(),
+            'deleter_id' => $deleter ? $deleter->getId() : null,
+            'resource_type' => $resource->getResourceId(),
+            'representation' => json_encode($representation),
+        ];
+    }
+
+    public function onResourceRemovePost(Event $event)
+    {
+        $services = $this->getServiceLocator();
+
+        $resource = $event->getTarget();
+        $id = spl_object_id($resource);
+        if (!array_key_exists($id, $this->pendingDeletions)) {
+            $logger = $services->get('Omeka\Logger');
+            $logger->warn('Necropolis: failed to retrieve information about the deleted resource');
+            return;
+        }
+
+        $connection = $services->get('Omeka\Connection');
+
+        $data = $this->pendingDeletions[$id];
         $sql = 'INSERT INTO necropolis_resource'
             . ' (id, title, is_public, created, modified, deleted, deleter_id, resource_type, representation) VALUES'
             . ' (:id, :title, :is_public, :created, :modified, :deleted, :deleter_id, :resource_type, :representation)';
         $stmt = $connection->prepare($sql);
-        $stmt->bindValue('id', $resource->getId(), PDO::PARAM_INT);
-        $stmt->bindValue('title', $resource->getTitle(), PDO::PARAM_STR);
-        $stmt->bindValue('is_public', $resource->isPublic(), PDO::PARAM_BOOL);
-        $stmt->bindValue('created', $resource->getCreated(), 'datetime');
-        $stmt->bindValue('modified', $resource->getModified(), 'datetime');
+        $stmt->bindValue('id', $data['id'], PDO::PARAM_INT);
+        $stmt->bindValue('title', $data['title'], PDO::PARAM_STR);
+        $stmt->bindValue('is_public', $data['is_public'], PDO::PARAM_BOOL);
+        $stmt->bindValue('created', $data['created'], 'datetime');
+        $stmt->bindValue('modified', $data['modified'], 'datetime');
         $stmt->bindValue('deleted', new DateTime(), 'datetime');
-        if ($deleter) {
-            $stmt->bindValue('deleter_id', $deleter->getId(), PDO::PARAM_INT);
+        if ($data['deleter_id']) {
+            $stmt->bindValue('deleter_id', $data['deleter_id'], PDO::PARAM_INT);
         } else {
             $stmt->bindValue('deleter_id', null, PDO::PARAM_NULL);
         }
-        $stmt->bindValue('resource_type', $resource->getResourceId(), PDO::PARAM_STR);
-        $stmt->bindValue('representation', $representation, 'json_array');
+        $stmt->bindValue('resource_type', $data['resource_type'], PDO::PARAM_STR);
+        $stmt->bindValue('representation', $data['representation'], PDO::PARAM_STR);
 
         if (method_exists($stmt, 'executeStatement')) {
             $stmt->executeStatement();
         } else {
             $stmt->execute();
         }
+
+        unset($this->pendingDeletions[$id]);
     }
 }
