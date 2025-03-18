@@ -29,7 +29,7 @@ class Module extends AbstractModule
 
     public function upgrade($oldVersion, $newVersion, ServiceLocatorInterface $serviceLocator)
     {
-        $connection = $services->get('Omeka\Connection');
+        $connection = $serviceLocator->get('Omeka\Connection');
         if (Comparator::lessThan($oldVersion, '0.3.0')) {
             $connection->executeStatement(<<<'SQL'
                 DELETE FROM necropolis_resource
