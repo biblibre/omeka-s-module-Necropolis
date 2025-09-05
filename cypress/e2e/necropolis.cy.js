@@ -1,5 +1,5 @@
 it('Necropolis', function() {
-     cy.visit('10.42.118.235')
+     cy.visit('localhost')
      cy.get('#content [href="/admin"]').click();
      cy.get('[name="email"]').click();
      cy.get('[name="email"]').clear();
