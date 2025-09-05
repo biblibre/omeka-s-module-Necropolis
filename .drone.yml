@@ -15,6 +15,9 @@ steps:
   - bash -c "cd ../.. && php /usr/local/libexec/wait-for-db.php"
   - ../../vendor/bin/phpunit
   - ../../node_modules/.bin/gulp test:module:cs
+  - bash -c "sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb"
+  - bash -c "npm install cypress"
+  - bash -c "npm cypress run"
   image: biblibre/omeka-s-ci:3.0.2-php7.4
   name: test
 type: docker
@@ -37,6 +40,9 @@ steps:
   - bash -c "cd ../.. && php /usr/local/libexec/wait-for-db.php"
   - ../../vendor/bin/phpunit
   - ../../node_modules/.bin/gulp test:module:cs
+  - bash -c "sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb"
+  - bash -c "npm install cypress"
+  - bash -c "npm cypress run"
   image: biblibre/omeka-s-ci:3.1.2-php8.0
   name: test
 type: docker
@@ -59,6 +65,9 @@ steps:
   - bash -c "cd ../.. && php /usr/local/libexec/wait-for-db.php"
   - ../../vendor/bin/phpunit
   - ../../node_modules/.bin/gulp test:module:cs
+  - bash -c "sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb"
+  - bash -c "npm install cypress"
+  - bash -c "npm cypress run"
   image: biblibre/omeka-s-ci:3.2.3-php8.0
   name: test
 type: docker
@@ -81,6 +90,9 @@ steps:
   - bash -c "cd ../.. && php /usr/local/libexec/wait-for-db.php"
   - ../../vendor/bin/phpunit
   - ../../node_modules/.bin/gulp test:module:cs
+  - bash -c "sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb"
+  - bash -c "npm install cypress"
+  - bash -c "npm cypress run"
   image: biblibre/omeka-s-ci:4.0.0-php8.0
   name: test
 type: docker
@@ -103,6 +115,9 @@ steps:
   - bash -c "cd ../.. && php /usr/local/libexec/wait-for-db.php"
   - ../../vendor/bin/phpunit
   - ../../node_modules/.bin/gulp test:module:cs
+  - bash -c "sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb"
+  - bash -c "npm install cypress"
+  - bash -c "npm cypress run"
   image: biblibre/omeka-s-ci:4.0.0-php8.1
   name: test
 type: docker
@@ -125,6 +140,9 @@ steps:
   - bash -c "cd ../.. && php /usr/local/libexec/wait-for-db.php"
   - ../../vendor/bin/phpunit
   - ../../node_modules/.bin/gulp test:module:cs
+  - bash -c "sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb"
+  - bash -c "npm install cypress"
+  - bash -c "npm cypress run"
   image: biblibre/omeka-s-ci:4.0.0-php8.2
   name: test
 type: docker
