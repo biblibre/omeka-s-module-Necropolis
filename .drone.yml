@@ -138,8 +138,8 @@ services:
     MYSQL_ROOT_PASSWORD: root
   image: mariadb:10.5
   name: db
-- image: biblibre/omeka-s
-  name: omekas-ci:4.0.0-php8.2
+- image: biblibre/omeka-s-ci:4.0.0-php8.2
+  name: omekas
   commands:
   - cp -rT /usr/src/omeka-s ../..
   - echo 'host = "db"\nuser = "root"\npassword = "root"\ndbname = "omeka_test"\n'
