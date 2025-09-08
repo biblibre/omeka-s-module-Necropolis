@@ -146,10 +146,7 @@ services:
     > ../../application/test/config/database.ini
 steps:
 - commands:
-  - cp -rT /usr/src/omeka-s ../..
-  - echo 'host = "db"\nuser = "root"\npassword = "root"\ndbname = "omeka_test"\n'
-    > ../../application/test/config/database.ini
-  - bash -c "cd ../.. && php /usr/local/libexec/wait-for-db.php && sleep 10 && npx cypress run"
+  - bash -c "sleep 30 && npx cypress run"
   image: cypress/included
   name: cypress
 workspace:
