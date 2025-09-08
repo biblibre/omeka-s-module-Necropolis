@@ -127,6 +127,27 @@ steps:
   - ../../node_modules/.bin/gulp test:module:cs
   image: biblibre/omeka-s-ci:4.0.0-php8.2
   name: test
+workspace:
+  path: omeka-s/modules/Necropolis
+---
+kind: pipeline
+name: omeka:4.0.0 php:8.2 mariadb:10.5
+services:
+- environment:
+    MYSQL_DATABASE: omeka_test
+    MYSQL_ROOT_PASSWORD: root
+  image: mariadb:10.5
+  name: db
+- commands:
+  - cp -rT /usr/src/omeka-s ../..
+  - echo 'host = "db"\nuser = "root"\npassword = "root"\ndbname = "omeka_test"\n'
+    > ../../application/test/config/database.ini
+  - bash -c "cd ../.. && php /usr/local/libexec/wait-for-db.php"
+  - ../../vendor/bin/phpunit
+  - ../../node_modules/.bin/gulp test:module:cs
+  image: biblibre/omeka-s-ci:4.0.0-php8.2
+  name: omekas
+steps:
 - commands:
   - bash -c "npx cypress run"
   image: cypress/included
