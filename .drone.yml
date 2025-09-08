@@ -127,10 +127,8 @@ steps:
   - ../../node_modules/.bin/gulp test:module:cs
   image: biblibre/omeka-s-ci:4.0.0-php8.2
   name: test
-type: docker
-cypress:
 - commands:
-  - cypress run
+  - bash -c "npx cypress run"
   image: cypress/included
   name: cypress
 workspace:
