@@ -13,7 +13,8 @@ services:
   - cp -rT /usr/src/omeka-s ../..
   - echo 'host = "db"\nuser = "root"\npassword = "root"\ndbname = "omeka_test"\n'
     > ../../application/test/config/database.ini
-  - bash -c "cd ../.. && php -S 0.0.0.0:80"
+  - bash -c "../../test/server_install.sh"
+
 steps:
 - commands:
   - bash -c "sleep 30 && npx cypress run"
