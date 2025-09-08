@@ -125,10 +125,14 @@ steps:
   - bash -c "cd ../.. && php /usr/local/libexec/wait-for-db.php"
   - ../../vendor/bin/phpunit
   - ../../node_modules/.bin/gulp test:module:cs
-  - bash -c "npx cypress run"
   image: biblibre/omeka-s-ci:4.0.0-php8.2
   name: test
 type: docker
+cypress:
+- commands:
+  - cypress run
+  image: cypress/included
+  name: cypress
 workspace:
   path: omeka-s/modules/Necropolis
 ---
