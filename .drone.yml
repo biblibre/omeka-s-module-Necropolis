@@ -13,7 +13,7 @@ services:
   - cp -rT /usr/src/omeka-s ../..
   - echo 'host = "db"\nuser = "root"\npassword = "root"\ndbname = "omeka_test"\n'
     > ../../application/test/config/database.ini
-  - bash -c "../../test/server_install.sh"
+  - bash -c "test/server_install.sh"
 
 steps:
 - commands:
