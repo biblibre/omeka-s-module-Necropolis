@@ -131,7 +131,7 @@ workspace:
   path: omeka-s/modules/Necropolis
 ---
 kind: pipeline
-name: omeka:4.0.0 php:8.2 mariadb:10.5
+name: omeka:4.0.0 php:8.2 mariadb:10.5 cypress
 services:
 - environment:
     MYSQL_DATABASE: omeka_test
