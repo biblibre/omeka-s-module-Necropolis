@@ -1,29 +1,22 @@
 ---
 kind: pipeline
-name: omeka:4.1.1 php:8.2 mariadb:11.4 cypress
+name: omeka:4.1.1 php:8.2 mariadb:10.5 cypress
 services:
-- name: omeka
-  build:
-    context: .
-    args:
-      OMEKA_S_VERSION: ${OMEKA_S_VERSION:-"4.1.1"}
-      PHP_VERSION: ${PHP_VERSION:-"8.2"}
-    target: prod
-  restart: "no"
-  env_file: ".env"
-  depends_on:
-    - db
-- name: db
-  image: mariadb:${MARIADB_VERSION:-11.4}
-  restart: "no"
-  environment:
-    MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-    MYSQL_DATABASE: ${MYSQL_DATABASE}
-    MYSQL_USER: ${MYSQL_USER}
-    MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+- environment:
+    MYSQL_DATABASE: omeka_test
+    MYSQL_ROOT_PASSWORD: root
+  image: mariadb:10.5
+  name: db
+- image: giocomai/omeka-s-docker:v4.1.1
+  name: omekas
+  commands:
+  - cp -rT /usr/src/omeka-s ../..
+  - echo 'host = "db"\nuser = "root"\npassword = "root"\ndbname = "omeka_test"\n'
+    > ../../application/test/config/database.ini
+
 steps:
 - commands:
-  - bash -c "sleep 30 && npx cypress run || base64 -w0 'cypress/screenshots/necropolis.cy.js/Necropolis (failed).png' && return 1"
+  - bash -c "sleep 30 && npx cypress run || base64 -w0 'cypress/screenshots/necropolis.cy.js/Necropolis (failed).png'"
   image: cypress/included
   name: cypress
 workspace:
