@@ -15,3 +15,14 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+
+beforeEach(() => {
+  /**
+   * We have a network error in our tests (that leads to a console error) trying to load this font.
+   * It doesn't do anything for our tests but not sure how to correct the issue.
+   * There is an issue in Github for this: https://github.com/cypress-io/cypress/discussions/29302
+   *
+   * The easiest workaround I've found is to intercept the request and return an empty response.
+   */
+  cy.intercept('**/fonts/FiraCode-VF.woff2', {});
+});
