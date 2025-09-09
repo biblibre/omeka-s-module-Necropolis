@@ -16,7 +16,7 @@ services:
     MYSQL_HOST: db
 steps:
 - commands:
-  - bash -c "npx cypress run || base64 -w0 'cypress/screenshots/necropolis.cy.js/Necropolis test -- Loads the website (failed).png' && base64 -w0 'cypress/screenshots/necropolis.cy.js/Necropolis test -- Tests the website (failed).png' && false"
+  - bash -c "npx cypress run || base64 -w0 'cypress/screenshots/necropolis.cy.js/Necropolis test -- Loads the website (failed).png' || base64 -w0 'cypress/screenshots/necropolis.cy.js/Necropolis test -- Tests the website (failed).png' && false"
   image: cypress/included
   name: cypress
 workspace:
