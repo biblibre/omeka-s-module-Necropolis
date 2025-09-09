@@ -9,9 +9,11 @@ services:
   name: db
 - image: giocomai/omeka-s-docker:v4.1.1
   name: omekas
-  commands:
-  - echo 'host = "db"\nuser = "root"\npassword = "root"\ndbname = "omeka_test"\n'
-    > ../../application/test/config/database.ini
+  environment:
+    MYSQL_USER: root
+    MYSQL_PASSWORD: root
+    MYSQL_DATABASE: omeka_test
+    MYSQL_HOST: db
 steps:
 - commands:
   - bash -c "sleep 60 && npx cypress run || base64 -w0 'cypress/screenshots/necropolis.cy.js/Necropolis (failed).png' && false"
