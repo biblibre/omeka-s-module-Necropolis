@@ -10,13 +10,11 @@ services:
 - image: giocomai/omeka-s-docker:v4.1.1
   name: omekas
   commands:
-  - cp -rT /usr/src/omeka-s ../..
   - echo 'host = "db"\nuser = "root"\npassword = "root"\ndbname = "omeka_test"\n'
     > ../../application/test/config/database.ini
-
 steps:
 - commands:
-  - bash -c "sleep 30 && npx cypress run || base64 -w0 'cypress/screenshots/necropolis.cy.js/Necropolis (failed).png'"
+  - bash -c "sleep 60 && npx cypress run || base64 -w0 'cypress/screenshots/necropolis.cy.js/Necropolis (failed).png' && false"
   image: cypress/included
   name: cypress
 workspace:
