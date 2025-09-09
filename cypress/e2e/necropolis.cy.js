@@ -1,5 +1,5 @@
 it('Necropolis', function() {
-     cy.visit('http://omekas')
+     cy.visit('http://omekas:8000')
      cy.get('#content [href="/admin"]').click();
      cy.get('[name="email"]').click();
      cy.get('[name="email"]').clear();
