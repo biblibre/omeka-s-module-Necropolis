@@ -1,12 +1,3 @@
-Cypress.on('uncaught:exception', (err) => {
-     // omekas/install has a weird exception that will fail the test
-     // Ignore the specific ReferenceError we don't care about
-     if (err.message.includes('chosenOptions')) {
-          return false
-     }
-     // let all other errors fail the test
-});
-
 it('Necropolis', function() {
 
 
