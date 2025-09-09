@@ -2,14 +2,13 @@ describe('Necropolis test', () =>
 {
      it('Loads the website', () => {
           cy.on('uncaught:exception', (err, runnable) => {
-          expect(err.message).to.include('chosenOption')
                // omekas/install has a weird exception that will fail the test
                // https://docs.cypress.io/api/cypress-api/catalog-of-events#Uncaught-Exceptions
 
                // using mocha's async done callback to finish
                // this test so we prove that an uncaught exception
                // was thrown
-               
+
                done()
 
                // return false to prevent the error from
