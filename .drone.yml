@@ -2,32 +2,32 @@
 kind: pipeline
 name: omeka:4.1.1 php:8.2 mariadb:11.4 cypress
 services:
-  omeka:
-    build:
-      context: .
-      args:
-        OMEKA_S_VERSION: ${OMEKA_S_VERSION:-"4.1.1"}
-        PHP_VERSION: ${PHP_VERSION:-"8.2"}
-      target: prod
-    restart: "no"
-    env_file: ".env"
-    ports:
-      - ${OMEKA_S_EXPOSED_PORT:-8080}:80
-    volumes:
-      - omeka:/volume
-    depends_on:
-      - db
-  db:
-    image: mariadb:${MARIADB_VERSION:-11.4}
-    restart: "no"
-    volumes:
-      - db:/var/lib/mysql
-      - ./data/db-init:/docker-entrypoint-initdb.d
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+- name: omeka
+  build:
+    context: .
+    args:
+      OMEKA_S_VERSION: ${OMEKA_S_VERSION:-"4.1.1"}
+      PHP_VERSION: ${PHP_VERSION:-"8.2"}
+    target: prod
+  restart: "no"
+  env_file: ".env"
+  ports:
+    - ${OMEKA_S_EXPOSED_PORT:-8080}:80
+  volumes:
+    - omeka:/volume
+  depends_on:
+    - db
+- name: db
+  image: mariadb:${MARIADB_VERSION:-11.4}
+  restart: "no"
+  volumes:
+    - db:/var/lib/mysql
+    - ./data/db-init:/docker-entrypoint-initdb.d
+  environment:
+    - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    - MYSQL_DATABASE=${MYSQL_DATABASE}
+    - MYSQL_USER=${MYSQL_USER}
+    - MYSQL_PASSWORD=${MYSQL_PASSWORD}
 steps:
 - commands:
   - bash -c "sleep 30 && npx cypress run || base64 -w0 'cypress/screenshots/necropolis.cy.js/Necropolis (failed).png' && return 1"
