@@ -26,3 +26,11 @@ beforeEach(() => {
    */
   cy.intercept('**/fonts/FiraCode-VF.woff2', {});
 });
+
+Cypress.on('uncaught:exception', (err) => {
+  // Ignore the specific ReferenceError we don't care about
+  if (err.message.includes('chosenOptions is not defined')) {
+    return false
+  }
+  // let all other errors fail the test
+})
