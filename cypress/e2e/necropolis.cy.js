@@ -1,10 +1,27 @@
 it('Necropolis', function() {
      cy.visit('http://omekas:8000')
-     cy.get('#content [href="/admin"]').click();
+     cy.get('[name="user[email]"]').click();
+     cy.get('[name="user[email]"]').clear();
+     cy.get('[name="user[email]"]').type('cypress@admin.com');
+     cy.get('[name="user[email-confirm]"]').click();
+     cy.get('[name="user[email-confirm]"]').clear();
+     cy.get('[name="user[email-confirm]"]').type('cypress@admin.com');
+     cy.get('[name="user[name]"]').click();
+     cy.get('[name="user[name]"]').clear();
+     cy.get('[name="user[name]"]').type('cypress');
+     cy.get('[name="user[password-confirm][password]"]').click();
+     cy.get('[name="user[password-confirm][password]"]').clear();
+     cy.get('[name="user[password-confirm][password]"]').type('cypress');
+     cy.get('[name="user[password-confirm][password-confirm]"]').click();
+     cy.get('[name="user[password-confirm][password-confirm]"]').clear();
+     cy.get('[name="user[password-confirm][password-confirm]"]').type('cypress');
+     cy.get('[name="settings[installation_title]"]').click();
+     cy.get('[name="settings[installation_title]"]').clear();
+     cy.get('[name="settings[installation_title]"]').type('cypress');
+     cy.get('#installationform [name="submit"]').click();
      cy.get('[name="email"]').click();
      cy.get('[name="email"]').clear();
-     cy.get('[name="email"]').type('admin@example.com');
-     cy.get('[name="password"]').click();
+     cy.get('[name="email"').type('cypress@admin.com');
      cy.get('[name="password"]').clear();
      cy.get('[name="password"]').type('cypress');
      cy.get('#loginform [name="submit"]').click();
