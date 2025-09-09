@@ -48,4 +48,3 @@ it('Necropolis', function() {
      cy.get('#menu .necropolis').click();
      cy.contains('.tablesaw-cell-content', 'ItemSet1').click();
 });
-
