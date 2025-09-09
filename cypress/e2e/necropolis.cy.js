@@ -1,5 +1,5 @@
 it('Necropolis', function() {
-     cy.visit('http://omekas')
+     cy.visit('http://omekas/install')
      cy.get('[name="user[email]"]').click();
      cy.get('[name="user[email]"]').clear();
      cy.get('[name="user[email]"]').type('cypress@admin.com');
