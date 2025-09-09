@@ -16,15 +16,6 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 
-Cypress.on('uncaught:exception', (err, runnable)  => {
-     // omekas/install has a weird exception that will fail the test
-     // Ignore the specific ReferenceError we don't care about
-     if (err.message.includes('chosenOptions')) {
-        return false
-     }
-     // let all other errors fail the test
-});
-
 beforeEach(() => {
   /**
    * We have a network error in our tests (that leads to a console error) trying to load this font.
