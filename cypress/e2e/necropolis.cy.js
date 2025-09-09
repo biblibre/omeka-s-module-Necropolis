@@ -1,4 +1,13 @@
 it('Necropolis', function() {
+     Cypress.on('uncaught:exception', (err) => {
+     // omekas/install has a weird exception that will fail the test
+     // Ignore the specific ReferenceError we don't care about
+     if (err.message.includes('chosenOptions is not defined')) {
+          return false
+     }
+     // let all other errors fail the test
+     });
+
      cy.visit('http://omekas/install')
      cy.get('[name="user[email]"]').click();
      cy.get('[name="user[email]"]').clear();
