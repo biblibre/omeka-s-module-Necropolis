@@ -20,7 +20,7 @@ steps:
   image: cypress/included
   name: cypress
 workspace:
-  path: omeka-s/modules/Necropolis
+  path: /var/www/html/modules/Necropolis
 ---
 kind: signature
 hmac: b6bbd94e7d1e40079e546386dca31b3ccc87b0439d315261be5a7b950415b7d2
