@@ -14,7 +14,7 @@ describe('Necropolis test', () =>
                return false;
           });
 
-          cy.visit('http://omekas/install');
+          cy.visit('http://omekas');
 
           cy.get('[name="user[email]"]').click();
           cy.get('[name="user[email]"]').clear();
@@ -42,8 +42,8 @@ describe('Necropolis test', () =>
           cy.get('[name="password"]').type('cypress');
           cy.get('#loginform [name="submit"]').click();
           cy.get('#menu .modules').click();
-          cy.contains(".module-name", 'Necropolis').closest('.module').find('[title="Install"]').click();
-          cy.contains(".module-name", 'Necropolis').closest('.module').find('[title="Deactivate"]');
+          cy.contains(".module-name", 'Necropolis').closest('.module').find('.o-icon-install').click();
+          cy.contains(".module-name", 'Necropolis').closest('.module').find('.o-icon-deactivate');
           cy.get('#menu .items').click();
           cy.get('#page-actions .button').click();
           cy.get('#properties [data-value-key="@value"][aria-labelledby="property-1-label"]').click();
