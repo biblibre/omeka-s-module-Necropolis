@@ -9,14 +9,12 @@ describe('Necropolis test', () =>
                // this test so we prove that an uncaught exception
                // was thrown
 
-               done()
-
                // return false to prevent the error from
                // failing this test
-               return false
+               return false;
           })
 
-          cy.visit('http://omekas/install')
+          cy.visit('http://omekas/install');
      });
 
      it ('Tests the website', () => {
