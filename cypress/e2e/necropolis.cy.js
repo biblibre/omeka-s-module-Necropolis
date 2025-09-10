@@ -1,6 +1,6 @@
 describe('Necropolis test', () =>
 {
-     it('Loads the website', () => {
+     it('Tests Necropolis', () => {
           cy.on('uncaught:exception', (err, runnable) => {
                // omekas/install has a weird exception that will fail the test
                // https://docs.cypress.io/api/cypress-api/catalog-of-events#Uncaught-Exceptions
@@ -12,12 +12,10 @@ describe('Necropolis test', () =>
                // return false to prevent the error from
                // failing this test
                return false;
-          })
+          });
 
           cy.visit('http://omekas/install');
-     });
 
-     it ('Tests the website', () => {
           cy.get('[name="user[email]"]').click();
           cy.get('[name="user[email]"]').clear();
           cy.get('[name="user[email]"]').type('cypress@admin.com');
